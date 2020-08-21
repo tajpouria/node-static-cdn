@@ -28,4 +28,4 @@ HOST_URL=http://localhost # Application host URL
 
 ## License
 
-Stub is [MIT licensed](LICENSE).
+pp-cdn is [MIT licensed](LICENSE).
