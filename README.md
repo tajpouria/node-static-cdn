@@ -4,7 +4,7 @@
 
 ## Configuration
 
-Consider to change`.env` file environment variables for costume setup, Default configuration provided as follow:
+Consider to change`.env` file environment variables for custom setup, Default configuration provided as follow:
 
 ```txt
 NODE_ENV=deployment # Environment application running on (development|test|deployment)
@@ -25,3 +25,7 @@ MINIFY_DATA=on # Should minify HTML, CSS and, JS
 
 HOST_URL=http://localhost # Application host URL
 ```
+
+## License
+
+Stub is [MIT licensed](LICENSE).
