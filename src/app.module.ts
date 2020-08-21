@@ -7,6 +7,7 @@ import { AppService } from 'src/app.service';
 
 @Module({
   imports: [
+    // Inject application-level logger
     WinstonModule.forRoot({
       transports: [
         new transports.Console({

@@ -1,20 +1,15 @@
 import { Injectable } from '@nestjs/common';
-import * as NodeCache from 'node-cache';
 import { Stream } from 'stream';
 import { createWriteStream } from 'fs';
 
-import { DataProcessor } from 'src/common';
+import { DataProcessor, nodeCache } from 'src/common';
 
 const {
-  CACHE_EXPIRY_TIMEOUT_SECONDS = '120',
   CACHE_DIRECTORY = 'cache',
   TARGET_HOST_URL = 'https://parspack.com',
-
   NONE_PROCESS_FILE_PATTERN = '.*.css.map$',
   STREAM_PROCESS_FILE_PATTERN = '.*(?:jpg|gif|png|jpeg|webp|svg|otf|ttf|woff|woff2|eot|json|php)$',
-
   MINIFY_DATA = 'on',
-
   HOST_URL = 'http://localhost:8080',
 } = process.env;
 
@@ -26,9 +21,7 @@ export class AppService {
   public cache: {
     get(key: string): string | undefined;
     set(key: string, value: any): boolean;
-  } = new NodeCache({ stdTTL: +CACHE_EXPIRY_TIMEOUT_SECONDS });
-
-  constructor() {}
+  } = nodeCache;
 
   /**
    * Generate data link from request request url

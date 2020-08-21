@@ -36,7 +36,7 @@ export class AppController {
     if ((mimeType = cache.get(dataLink.key))) {
       // Data is already cached and cache is valid
 
-      logger.info(`Cache HIT ${dataLink.key}`);
+      logger.info(`HIT '${dataLink.key}'`);
       response.setHeader('X-Cache', 'HIT');
       response.setHeader('X-Cache-Lookup', 'HIT');
     } else {
@@ -46,19 +46,19 @@ export class AppController {
         if (dataLink.processType === 'none') {
           // Data should NOT processed and cached
 
-          response.status(204);
+          response.sendStatus(204);
           return;
         } else if (dataLink.processType === 'stream') {
           // Data should NOT processed but should cached
 
-          logger.info(`Pull ${url}`);
+          logger.info(`Pull '${url}'`);
           const { data, headers } = await httpClient.get<Stream>(url, {
             responseType: 'stream',
           });
 
           mimeType = headers['content-type'];
 
-          logger.info(`Cache ${dataLink.key}`);
+          logger.info(`Cache '${dataLink.key}'`);
           await cacheAs(dataLink.key, mimeType, data);
         } else {
           // Data should BOTH processed but should cached
@@ -68,22 +68,22 @@ export class AppController {
 
           mimeType = headers['content-type'];
 
-          logger.info(`Processing ${dataLink.key}`);
+          logger.info(`Processing '${dataLink.key}'`);
           const pd = processData(data, mimeType);
 
-          logger.info(`Cache ${dataLink.key}`);
+          logger.info(`Cache '${dataLink.key}'`);
           await cacheAs(dataLink.key, mimeType, Readable.from([pd]));
         }
       } catch (error) {
         logger.warn(error);
 
-        response.status(204);
+        response.sendStatus(204);
         return;
       }
     }
 
     // Setting mime-type and send relative linked data
-    response.set('Content-Type', mimeType ?? 'text/html');
+    response.set('Content-Type', mimeType);
     response.sendFile(dataLink.key);
   }
 }

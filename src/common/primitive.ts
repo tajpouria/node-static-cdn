@@ -8,7 +8,7 @@ export function objectContainsAll(
   target: Record<string, any>,
   items: string[],
   message = 'Does not exists',
-) {
+): void {
   const result: string[] = [];
   items.forEach(env => {
     target[env] ?? result.push(env);
