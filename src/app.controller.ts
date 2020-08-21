@@ -31,23 +31,27 @@ export class AppController {
     const { url } = request;
     const dataLink = genDataLink(url);
 
-    let mimeType: string | undefined;
+    let mimeType: string | undefined = undefined;
 
     if ((mimeType = cache.get(dataLink.key))) {
       // Data is already cached and cache is valid
 
       logger.info(`HIT '${dataLink.key}'`);
+      // Setting CDN Header
       response.setHeader('X-Cache', 'HIT');
       response.setHeader('X-Cache-Lookup', 'HIT');
+
+      // Setting mime-type and send relative linked data
+      response.set('Content-Type', mimeType);
+      response.sendFile(dataLink.key);
     } else {
       try {
-        // Data is NOT cached or cache is  no longer valid
+        // Data is NOT cached or cache is no longer valid
 
         if (dataLink.processType === 'none') {
           // Data should NOT processed and cached
 
           response.sendStatus(204);
-          return;
         } else if (dataLink.processType === 'stream') {
           // Data should NOT processed but should cached
 
@@ -60,8 +64,11 @@ export class AppController {
 
           logger.info(`Cache '${dataLink.key}'`);
           await cacheAs(dataLink.key, mimeType, data);
+
+          // Setting mime-type and send relative linked data
+          response.set('Content-Type', mimeType).sendFile(dataLink.key);
         } else {
-          // Data should BOTH processed but should cached
+          // Data should BOTH processed and cached
 
           logger.info(`Pull ${url}`);
           const { data, headers } = await httpClient.get<string>(url);
@@ -73,17 +80,15 @@ export class AppController {
 
           logger.info(`Cache '${dataLink.key}'`);
           await cacheAs(dataLink.key, mimeType, Readable.from([pd]));
+
+          // Setting mime-type and send relative linked data
+          response.set('Content-Type', mimeType).sendFile(dataLink.key);
         }
       } catch (error) {
         logger.warn(error);
 
         response.sendStatus(204);
-        return;
       }
     }
-
-    // Setting mime-type and send relative linked data
-    response.set('Content-Type', mimeType);
-    response.sendFile(dataLink.key);
   }
 }

@@ -7,22 +7,21 @@ import { objectContainsAll } from 'src/common';
 
 async function bootstrap() {
   // Check if All required environment variable already defined
-  process.env.NODE_ENV !== 'development' &&
-    objectContainsAll(
-      process.env,
-      [
-        'NODE_ENV',
-        'PORT',
-        'CACHE_EXPIRY_TIMEOUT_SECONDS',
-        'CACHE_DIRECTORY',
-        'TARGET_HOST_URL',
-        'NONE_PROCESS_FILE_PATTERN',
-        'STREAM_PROCESS_FILE_PATTERN',
-        'MINIFY_DATA',
-        'HOST_URL',
-      ],
-      'Does not exists on process.env',
-    );
+  objectContainsAll(
+    process.env,
+    [
+      'NODE_ENV',
+      'PORT',
+      'CACHE_EXPIRY_TIMEOUT_SECONDS',
+      'CACHE_DIRECTORY',
+      'TARGET_HOST_URL',
+      'NONE_PROCESS_FILE_PATTERN',
+      'STREAM_PROCESS_FILE_PATTERN',
+      'MINIFY_DATA',
+      'HOST_URL',
+    ],
+    'Does not exists on process.env',
+  );
 
   const {
     PORT = '8080',

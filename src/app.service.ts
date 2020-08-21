@@ -7,7 +7,7 @@ import { DataProcessor, nodeCache } from 'src/common';
 const {
   CACHE_DIRECTORY = 'cache',
   TARGET_HOST_URL = 'https://parspack.com',
-  NONE_PROCESS_FILE_PATTERN = '.*.css.map$',
+  NONE_PROCESS_FILE_PATTERN = '.*.(?:css|js).map$',
   STREAM_PROCESS_FILE_PATTERN = '.*(?:jpg|gif|png|jpeg|webp|svg|otf|ttf|woff|woff2|eot|json|php)$',
   MINIFY_DATA = 'on',
   HOST_URL = 'http://localhost:8080',
@@ -78,11 +78,10 @@ export class AppService {
     const dp = new DataProcessor(mimeType);
     dp.data = data;
 
+    // Replace after minify with less amount of content
     dp.findAndReplace(new RegExp(TARGET_HOST_URL, 'g'), HOST_URL);
 
-    if (MINIFY_DATA === 'on') {
-      dp.minify();
-    }
+    if (MINIFY_DATA === 'on') dp.minify();
 
     return dp.data;
   }

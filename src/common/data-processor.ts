@@ -24,14 +24,10 @@ export class DataProcessor {
 
     if (mimeType.includes('text/html') || mimeType.includes('text/css'))
       this.data = minify(this.data, {
-        collapseBooleanAttributes: true,
         collapseWhitespace: true,
         minifyCSS: true,
         minifyJS: true,
         removeComments: true,
-        useShortDoctype: true,
-        html5: true,
-        trimCustomFragments: true,
       });
   }
 }
