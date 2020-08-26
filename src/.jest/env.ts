@@ -4,7 +4,7 @@ process.env = {
   PORT: '8080',
   CACHE_DIRECTORY: 'cache',
   HOST_URL: 'http://localhost:8080',
-  TARGET_HOST_URL: 'https://parspack.com',
+  TARGET_HOST_URL: 'https://github.com',
   CACHE_EXPIRY_TIMEOUT_SECONDS: '120',
   NONE_PROCESS_FILE_PATTERN: '.*.css.map$',
   STREAM_PROCESS_FILE_PATTERN:

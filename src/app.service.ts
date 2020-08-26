@@ -6,7 +6,7 @@ import { DataProcessor, nodeCache } from 'src/common';
 
 const {
   CACHE_DIRECTORY = 'cache',
-  TARGET_HOST_URL = 'https://parspack.com',
+  TARGET_HOST_URL = 'https://github.com',
   NONE_PROCESS_FILE_PATTERN = '.*.(?:css|js).map$',
   STREAM_PROCESS_FILE_PATTERN = '.*(?:jpg|gif|png|jpeg|webp|svg|otf|ttf|woff|woff2|eot|json|php)$',
   MINIFY_DATA = 'on',

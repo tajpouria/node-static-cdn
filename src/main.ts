@@ -27,7 +27,7 @@ async function bootstrap() {
     PORT = '8080',
     CACHE_DIRECTORY = 'cache',
     HOST_URL = 'http://localhost:8080',
-    TARGET_HOST_URL = 'https://parspack.com',
+    TARGET_HOST_URL = 'https://github.com',
   } = process.env;
 
   // Create cache folder
